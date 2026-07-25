@@ -11,6 +11,9 @@
       @if (!linked) {
         <span>NO LINK</span>
       }
+      @if (linked) {
+        <span>LINKED</span>
+      }
       @if (linked && showListenersCount) {
         <span>L: {{ listeners }}</span>
       }
@@ -22,44 +25,53 @@
   <div class="row small"></div>
   <div class="row">
     <div>
-      <span>{{ callSystem }}</span>
+      <span>{{ scanning ? '' : callSystem }}</span>
     </div>
     <div>
-      <span>{{ type | uppercase }}</span>
+      <span>{{ scanning ? '' : (type | uppercase) }}</span>
     </div>
     <div>
-      <span>{{ callTag }}</span>
+      <span>{{ scanning ? '' : callTag }}</span>
     </div>
   </div>
   <div class="row">
     <div>
-      <span>{{ callTalkgroup }}</span>
+      <span>{{ livefeedStatus }}</span>
+    </div>
+    <div>
+      <span>{{ scanning ? '' : (callUnit || 'UNIT') }}</span>
+    </div>
+    <div></div>
+  </div>
+  <div class="row">
+    <div>
+      <span>{{ scanning ? '' : callTalkgroup }}</span>
     </div>
     <div></div>
     <div>
-      <span>{{ callDate | date:'MM/dd' }} </span>
-      <span>{{ callProgress | date:timeFormat }}</span>
+      <span>{{ scanning ? '' : (callDate | date:'MM/dd') }} </span>
+      <span>{{ scanning ? '' : (callProgress | date:timeFormat) }}</span>
     </div>
   </div>
   <div class="row big full">
-    <span>{{ callTalkgroupName }}</span>
+    <span>{{ scanning ? 'SCANNING' : callTalkgroupName }}</span>
   </div>
   <div class="row">
     <div>
-      <span>F: {{ callFrequency || 0 }}</span>
+      <span>{{ scanning ? '' : ('F: ' + (callFrequency || 0)) }}</span>
     </div>
     <div></div>
     <div>
-      <span>TGID: {{ callTalkgroupId || 0 }}</span>
+      <span>{{ scanning ? '' : ('TGID: ' + (callTalkgroupId || 0)) }}</span>
     </div>
   </div>
   <div class="row">
     <div>
-      <span>E: {{ callError || 0 }} S: {{ callSpike || 0 }} </span>
+      <span>{{ scanning ? '' : ('E: ' + (callError || 0) + ' S: ' + (callSpike || 0)) }}</span>
     </div>
     <div></div>
     <div>
-      @if (callUnit) {
+      @if (callUnit && !scanning) {
         <span>UID: {{ callUnit }}</span>
       }
     </div>

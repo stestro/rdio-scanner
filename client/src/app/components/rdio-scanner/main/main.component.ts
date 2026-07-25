@@ -123,6 +123,22 @@ export class RdioScannerMainComponent implements OnDestroy, OnInit {
         return this.config?.showListenersCount || false;
     }
 
+    get livefeedStatus(): string {
+        if (this.livefeedPaused) {
+            return 'PAUSED';
+        }
+
+        if (this.livefeedOnline) {
+            return 'ONLINE';
+        }
+
+        return 'OFFLINE';
+    }
+
+    get scanning(): boolean {
+        return this.livefeedOnline && !this.call && !this.livefeedPaused && !this.playbackMode;
+    }
+
     @Output() openSearchPanel = new EventEmitter<void>();
 
     @Output() openSelectPanel = new EventEmitter<void>();
